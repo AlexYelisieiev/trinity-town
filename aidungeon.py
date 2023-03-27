@@ -2,6 +2,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import Keys
+from selenium.webdriver.common.by import By
 from datetime import datetime
 import os
 
@@ -40,18 +41,20 @@ class AIDGenerator(object):
         # doesn't find anything and just wait for n seconds
         driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
 
-        
         news = ''
         while not news or len(news) > 280 or len(news) < 65:
             driver.get('https://play.aidungeon.io/main/home')
 
             # Press buttons
-            driver.find_element_by_xpath(
-                '//div[text()="PLAY"]').click()
-            driver.find_element_by_xpath(
-                '//div[@aria-label="Quick Start"]').click()
-            driver.find_element_by_xpath(
-                '//div[text()="Custom"]').click()
+            driver.find_element(
+                By.XPATH, '//div[text()="PLAY"]'
+            ).click()
+            driver.find_element(
+                By.XPATH, '//div[@aria-label="Quick Start"]'
+            ).click()
+            driver.find_element(
+                By.XPATH, '//div[text()="Custom"]'
+            ).click()
 
             # Create an action chain
             action = webdriver.ActionChains(driver)
@@ -66,16 +69,16 @@ class AIDGenerator(object):
 
             # Enter mem
             action.click(
-                    driver.find_element_by_xpath(
-                        '//textarea[@aria-label="Memory"]'
-                    )
+                driver.find_element(
+                    By.XPATH, '//textarea[@aria-label="Memory"]'
                 )
+            )
             action.send_keys(self.AIRemember)
 
             # Enter note
             action.click(
-                driver.find_element_by_xpath(
-                    '//textarea[@aria-label="Authors Note"]'
+                driver.find_element(
+                    By.XPATH, '//textarea[@aria-label="Authors Note"]'
                 )
             )
             action.send_keys(self.styleHint)
@@ -85,8 +88,8 @@ class AIDGenerator(object):
 
             # Click on prompt field
             action.click(
-                driver.find_element_by_xpath(
-                    '//textarea[@placeholder="What happens next?"]'
+                driver.find_element(
+                    By.XPATH, '//textarea[@placeholder="What happens next?"]'
                 )
             )
             action.perform()
@@ -106,9 +109,11 @@ class AIDGenerator(object):
 
             # Find news
             news = ' '.join(
-                span.text for span in driver.find_elements_by_tag_name(
-                    'span')).strip()
-            news = '#AI #AInews\n' + news
+                span.text for span in driver.find_elements(
+                    By.TAG_NAME, 'span'
+                )
+            ).strip()
+            news = '#AI #AInews #Fantasy #Fiction\n' + news
 
             # Create today's date
             now = datetime.now()
@@ -116,7 +121,7 @@ class AIDGenerator(object):
 
             # Add date to generated
             news = news.replace('of the day', f'on {now}').replace('   ', ' ')
-            
+
             driver.close()
 
         return news
