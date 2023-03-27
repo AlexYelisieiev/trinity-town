@@ -4,7 +4,7 @@ from os import system
 
 
 prompt = 'Top event of the day: '
-AIRemember = 'It is a news feed in a local newspaper of a small FANTASY (it is important) town located somewhere in the forest. The time is 50\'s or 70\'s. The town is fantasy. News are mostly about fantasy stuff going on in the city and around it. Only good news allowed.'
+AIRemember = 'It is a news feed in a local newspaper of a small FANTASY (it is important) town located somewhere in the forest. The time is 50\'s or 70\'s. The town is fantasy. News are mostly about unreal stuff going on in the city and around it. Only good news allowed.'
 styleHint = 'Use a newspaper writing style. Always write only one sentence. Only good news allowed.'
 
 if __name__ == '__main__':
