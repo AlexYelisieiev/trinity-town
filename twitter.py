@@ -1,4 +1,5 @@
 from time import sleep
+import pyautogui as pygui
 from selenium.webdriver import ActionChains
 from selenium.webdriver import Chrome
 from selenium.webdriver import Keys
@@ -7,6 +8,7 @@ from selenium.webdriver.common.by import By
 import config
 
 
+# Tweets something. Also pastes an image
 def createTweet(text: str) -> None:
     # Create opt's and set user agent
     options = Options()
@@ -21,11 +23,11 @@ def createTweet(text: str) -> None:
 
     # Window size
     driver.set_window_size(1920, 1080)
-    
+
     driver.implicitly_wait(10)
     driver.get('https://twitter.com/i/flow/login')
     driver.refresh()
-    
+
     # Entering nickname
     sleep(10)
     identifier = driver.find_element(By.TAG_NAME, 'input')
@@ -59,12 +61,15 @@ def createTweet(text: str) -> None:
         )
         placeForText.send_keys(text)
 
+    # Paste the generated image
+    sleep(1)
+    pygui.hotkey('ctrl', 'v', interval=0.5)
+    sleep(5)
+
     # Send the tweet
-    for _ in range(8):
+    for _ in range(10):
         actionChain.send_keys(Keys.TAB)
     actionChain.send_keys(Keys.ENTER)
     actionChain.perform()
-    
     sleep(1)
-
     driver.close()

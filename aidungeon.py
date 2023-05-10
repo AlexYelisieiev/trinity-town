@@ -1,10 +1,12 @@
-from time import sleep
 from selenium import webdriver
+import pyautogui as pygui
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from datetime import datetime
+from image_generation import ImageGenerator
 import os
+from time import sleep
 
 
 WINDOW_WIDTH = 1920
@@ -14,6 +16,7 @@ MAXIMUM_LENGTH = 280
 
 
 # A class used to generate news
+# Also uses ImageGenerator
 class AIDGenerator(object):
 
     def __init__(self, prompt, AIRemember='', styleHint='') -> None:
@@ -21,8 +24,7 @@ class AIDGenerator(object):
         self.AIRemember = AIRemember
         self.styleHint = styleHint
 
-    def generateNewsFeed(self) -> str:
-
+    def generateNewsFeed(self) -> tuple[str, str]:
         # Setting options
         options = Options()
         options.add_argument(
@@ -108,12 +110,14 @@ class AIDGenerator(object):
             sleep(10)
 
             # Find news
-            news = ' '.join(
+            global raw_news
+            raw_news = ' '.join(
                 span.text for span in driver.find_elements(
                     By.TAG_NAME, 'span'
                 )
             ).strip()
-            news = '#AI #AInews #Fantasy #Fiction\n' + news
+
+            news = '#AI #AInews #Fantasy #Fiction\n' + raw_news
 
             # Create today's date
             now = datetime.now()
@@ -123,5 +127,4 @@ class AIDGenerator(object):
             news = news.replace('of the day', f'on {now}').replace('   ', ' ')
 
             driver.close()
-
-        return news
+        return raw_news, news
