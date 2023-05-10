@@ -33,7 +33,7 @@ class ImageGenerator(object):
         pygui.click(x=401, y=185)
         pygui.write(prompt)
         pygui.press('enter')
-        pygui.sleep(40)
+        pygui.sleep(35)
         pygui.leftClick(x=488, y=422)
         pygui.sleep(5)
         pygui.rightClick()
