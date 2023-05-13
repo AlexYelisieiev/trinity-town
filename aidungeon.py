@@ -19,10 +19,11 @@ MAXIMUM_LENGTH = 280
 # Also uses ImageGenerator
 class AIDGenerator(object):
 
-    def __init__(self, prompt, AIRemember='', styleHint='') -> None:
+    def __init__(self, prompt, ai_remember='', style_hint='', banned_words=None) -> None:
         self.prompt = prompt
-        self.AIRemember = AIRemember
-        self.styleHint = styleHint
+        self.ai_remember = ai_remember
+        self.style_hint = style_hint
+        self.banned_words = banned_words or []
 
     def generateNewsFeed(self) -> tuple[str, str]:
         # Setting options
@@ -32,19 +33,34 @@ class AIDGenerator(object):
         )
         options.add_argument('headless')
 
-        # Creating driver
-        driver = webdriver.Chrome(
-            executable_path=r'./chromedriver.exe',
-            options=options
-        )
-        driver.set_window_size(WINDOW_WIDTH, WINDOW_HEIGHT)
+        # It was moved inside a cycle for deletig the driver every
+        # time if it has to generate a new article
+        # # Creating driver
+        # driver = webdriver.Chrome(
+        #     executable_path=r'./chromedriver.exe',
+        #     options=options
+        # )
+        # driver.set_window_size(WINDOW_WIDTH, WINDOW_HEIGHT)
 
-        # Tell the driver not to panic if it
-        # doesn't find anything and just wait for n seconds
-        driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
+        # # Tell the driver not to panic if it
+        # # doesn't find anything and just wait for n seconds
+        # driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
 
+        # BUG: news get hashtags if regenerated
         news = ''
-        while not news or len(news) > 280 or len(news) < 65:
+        # Check the lengh and banned words
+        while not news or len(news) > 280 or len(news) < 65 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words):
+            # Creating driver
+            driver = webdriver.Chrome(
+                executable_path=r'./chromedriver.exe',
+                options=options
+            )
+            driver.set_window_size(WINDOW_WIDTH, WINDOW_HEIGHT)
+
+            # Tell the driver not to panic if it
+            # doesn't find anything and just wait for n seconds
+            driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
+
             driver.get('https://play.aidungeon.io/main/home')
 
             # Press buttons
@@ -75,7 +91,7 @@ class AIDGenerator(object):
                     By.XPATH, '//textarea[@aria-label="Memory"]'
                 )
             )
-            action.send_keys(self.AIRemember)
+            action.send_keys(self.ai_remember)
 
             # Enter note
             action.click(
@@ -83,9 +99,27 @@ class AIDGenerator(object):
                     By.XPATH, '//textarea[@aria-label="Authors Note"]'
                 )
             )
-            action.send_keys(self.styleHint)
+            action.send_keys(self.style_hint)
+      
+            # Select model
+            action.click(
+                driver.find_element(
+                    By.XPATH, '//div[contains(text(), "adventure-griffin-v1.2.0")]'
+                )
+            )
+            
             action.perform()
+            action.reset_actions()
 
+            sleep(0.5)
+            
+            action.click(
+                driver.find_element(
+                    By.XPATH, '//div[contains(text(), "adventure-griffin-v2.0 (beta)")]'
+                )
+            )
+
+            action.perform()
             action.reset_actions()
 
             # Click on prompt field
