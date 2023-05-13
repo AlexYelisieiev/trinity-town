@@ -17,8 +17,8 @@ class ImageGenerator(object):
             inside the function.
         '''
         pygui.press('win')
-        pygui.sleep(0.2)
-        pygui.write('google chrome', interval=0.01)
+        pygui.sleep(0.5)
+        pygui.write('google chrome', interval=0.05)
         pygui.sleep(1)
         pygui.press('enter')
         pygui.sleep(0.5)
@@ -26,7 +26,7 @@ class ImageGenerator(object):
             pygui.hotkey('win', 'up')
             pygui.sleep(0.01)
         pygui.sleep(4)
-        pygui.write('https://www.bing.com/create', interval=0.01)
+        pygui.write('https://www.bing.com/create', interval=0.05)
         pygui.sleep(0.1)
         pygui.press('enter')
         pygui.sleep(7)
@@ -40,5 +40,5 @@ class ImageGenerator(object):
         pygui.sleep(2)
         pygui.leftClick(542, 483)
         sleep(2)
-        pygui.hotkey('alt', 'f4', interval=0.4)
+        pygui.hotkey('alt', 'f4', interval=0.5)
 
