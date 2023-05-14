@@ -1,11 +1,13 @@
 from time import sleep
 import pyautogui as pygui
+import pyperclip
 
 
 class ImageGenerator(object):
     '''Generates images using the given prompt and copies them
     to the clipboard.
     '''
+    
     def __init__(self, prompt: str = '') -> None:
         self.prompt = prompt
 
@@ -16,8 +18,13 @@ class ImageGenerator(object):
             prompt: prompt used for the generation. Not modified
             inside the function.
         '''
+
+        # HACK: aidungeon pastes some symbols that stop pyautogui to
+        # just write it. Thus, pyperclip is used
+        prompt = prompt or self.prompt
+        pyperclip.copy(prompt)
         pygui.press('win')
-        pygui.sleep(0.5)
+        pygui.sleep(1)
         pygui.write('google chrome', interval=0.05)
         pygui.sleep(1)
         pygui.press('enter')
@@ -31,9 +38,9 @@ class ImageGenerator(object):
         pygui.press('enter')
         pygui.sleep(7)
         pygui.click(x=401, y=185)
-        pygui.write(prompt)
+        pygui.write(pyperclip.paste(), interval=0.02)
         pygui.press('enter')
-        pygui.sleep(35)
+        pygui.sleep(37)
         pygui.leftClick(x=488, y=422)
         pygui.sleep(5)
         pygui.rightClick()
@@ -41,4 +48,3 @@ class ImageGenerator(object):
         pygui.leftClick(542, 483)
         sleep(2)
         pygui.hotkey('alt', 'f4', interval=0.5)
-
