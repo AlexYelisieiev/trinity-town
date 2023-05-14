@@ -34,7 +34,7 @@ def createTweet(text: str) -> None:
     identifier.send_keys(config.user, Keys.ENTER)
 
     # Entering password
-    sleep(10)
+    sleep(8)
     actionChain = ActionChains(driver)
     actionChain.send_keys(config.password, Keys.ENTER)
     actionChain.perform()
