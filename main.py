@@ -7,7 +7,8 @@ from os import system
 prompt = 'Top event of the day: '
 ai_remember = 'It is a news feed in a local newspaper of a small fantasy town located somewhere in the forest. Lots of things can happen in such a fantasy place. The time is 50\'s or 70\'s. Only good news allowed. The report contains only one main news article. Lots of things can happen in such a fantasy place. News must be fun or cool, not sad. The news is fantasy.'
 style_hint = 'Use a newspaper writing style. The report contains only one main news article.'
-banned_words = ['next event:', 'next headline:', 'next article:', 'found dead', 'finds dead', 'kills', 'killed']
+banned_words = ['second', 'you', 'next event:', 'next headline:', 'next article:', 'found dead', 'finds dead', 'kills', 'killed']
+image_style = 'fantasy style, elegant, digital painting, artstation, unreal engine, octane render, concept art, hyper realistic lighting, illustration'
 
 if __name__ == '__main__':
     news_generator = aidungeon.AIDGenerator(
@@ -34,7 +35,7 @@ if __name__ == '__main__':
         print('Generating an image...')
         # Generate an image
         image_generator = ImageGenerator()
-        image_generator.generate_image(prompt=f'{raw_news}, digital art, fantasy style, ultra realistic, artstation')
+        image_generator.generate_image(prompt=f'{raw_news}, {image_style}')
         system('cls')
         print('Tweeting the news...')
         twitter.createTweet(ready_to_post_news)
