@@ -46,9 +46,13 @@ class AIDGenerator(object):
         # # doesn't find anything and just wait for n seconds
         # driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
 
+        # TODO: add sleep before the interaction with aidungeon
+        # elements.
+        # TODO: add a function for action perform and reset.
+        
         news = ''
         # Check the lengh and banned words
-        while not news or len(news) > 300 or len(news) < 100 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words) or news[-1] == ':':
+        while not news or len(news) > 280 or len(news) < 100 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words) or news[-1] == ':':
             # Creating driver
             driver = webdriver.Chrome(
                 executable_path=r'./chromedriver.exe',
@@ -101,6 +105,8 @@ class AIDGenerator(object):
             )
             action.send_keys(self.style_hint)
     
+            # NOTE: The oldest model performs better, therefore the
+            # following code's commented
             # # Select model
             # action.click(
             #     driver.find_element(
@@ -151,7 +157,7 @@ class AIDGenerator(object):
                 )
             ).strip()
 
-            news = '#AI #AInews #Fantasy #Fiction\n' + raw_news
+            news = raw_news + '\n#AI #AIart #art #AInews #fantasy #fiction'
 
             # Create today's date
             now = datetime.now()
