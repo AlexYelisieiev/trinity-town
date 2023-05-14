@@ -46,10 +46,9 @@ class AIDGenerator(object):
         # # doesn't find anything and just wait for n seconds
         # driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
 
-        # BUG: news get hashtags if regenerated
         news = ''
         # Check the lengh and banned words
-        while not news or len(news) > 280 or len(news) < 65 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words):
+        while not news or len(news) > 300 or len(news) < 100 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words) or news[-1] == ':':
             # Creating driver
             driver = webdriver.Chrome(
                 executable_path=r'./chromedriver.exe',
@@ -62,10 +61,11 @@ class AIDGenerator(object):
             driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
 
             driver.get('https://play.aidungeon.io/main/home')
-
+            driver.refresh()
+            sleep(10)
             # Press buttons
             driver.find_element(
-                By.XPATH, '//div[text()="PLAY"]'
+                By.XPATH, '//div[contains(text(), "PLAY")]'
             ).click()
             driver.find_element(
                 By.XPATH, '//div[@aria-label="Quick Start"]'
@@ -100,24 +100,24 @@ class AIDGenerator(object):
                 )
             )
             action.send_keys(self.style_hint)
-      
-            # Select model
-            action.click(
-                driver.find_element(
-                    By.XPATH, '//div[contains(text(), "adventure-griffin-v1.2.0")]'
-                )
-            )
+    
+            # # Select model
+            # action.click(
+            #     driver.find_element(
+            #         By.XPATH, '//div[contains(text(), "adventure-griffin-v1.2.0")]'
+            #     )
+            # )
             
-            action.perform()
-            action.reset_actions()
+            # action.perform()
+            # action.reset_actions()
 
-            sleep(0.5)
+            # sleep(0.5)
             
-            action.click(
-                driver.find_element(
-                    By.XPATH, '//div[contains(text(), "adventure-griffin-v2.0 (beta)")]'
-                )
-            )
+            # action.click(
+            #     driver.find_element(
+            #         By.XPATH, '//div[contains(text(), "adventure-griffin-v2.0 (beta)")]'
+            #     )
+            # )
 
             action.perform()
             action.reset_actions()
