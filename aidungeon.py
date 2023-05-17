@@ -46,13 +46,11 @@ class AIDGenerator(object):
         # # doesn't find anything and just wait for n seconds
         # driver.implicitly_wait(TIME_TO_IMPLICITLY_WAIT)
 
-        # TODO: add sleep before the interaction with aidungeon
-        # elements.
         # TODO: add a function for action perform and reset.
         
         news = ''
         # Check the lengh and banned words
-        while not news or len(news) > 280 or len(news) < 100 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words) or news[-1] == ':':
+        while not news or len(news) > 280 or len(news) < 100 or any(banned_word.lower() in news.lower() for banned_word in self.banned_words) or news[-1] == ':' or news[-1] == ',':
             # Creating driver
             driver = webdriver.Chrome(
                 executable_path=r'./chromedriver.exe',
@@ -155,9 +153,14 @@ class AIDGenerator(object):
                 span.text for span in driver.find_elements(
                     By.TAG_NAME, 'span'
                 )
-            ).strip()
+            )
 
-            news = raw_news + '\n#AI #AIart #art #AInews #fantasy #fiction'
+            # # Replace special characters
+            # unneded_characters = ['\n', '\r', '\t', '\b', '\a', '\f', '\v']
+            # for character in unneded_characters:
+            #     raw_news.replace(character, '')
+
+            news = raw_news + '\n#AI #AIart #art #AInews #fantasy #fiction\n'
 
             # Create today's date
             now = datetime.now()
