@@ -1,6 +1,5 @@
 from time import sleep
 import pyautogui as pygui
-import pyperclip
 
 
 class ImageGenerator(object):
@@ -22,23 +21,22 @@ class ImageGenerator(object):
         # HACK: aidungeon pastes some symbols that stop pyautogui to
         # just write it. Thus, pyperclip is used
         prompt = prompt or self.prompt
-        pyperclip.copy(prompt)
         pygui.press('win')
         pygui.sleep(1)
         pygui.write('google chrome', interval=0.05)
         pygui.sleep(1)
         pygui.press('enter')
-        pygui.sleep(0.5)
+        pygui.sleep(0.8)
         for _ in range(4):
             pygui.hotkey('win', 'up')
             pygui.sleep(0.01)
         pygui.sleep(4)
         pygui.write('https://www.bing.com/create', interval=0.05)
-        pygui.sleep(0.1)
+        pygui.sleep(0.05)
         pygui.press('enter')
         pygui.sleep(7)
         pygui.click(x=401, y=185)
-        pygui.write(pyperclip.paste(), interval=0.02)
+        pygui.write(prompt, interval=0.02)
         pygui.press('enter')
         pygui.sleep(37)
         pygui.leftClick(x=488, y=422)
