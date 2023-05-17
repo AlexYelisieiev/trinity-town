@@ -5,10 +5,10 @@ from os import system
 
 
 prompt = 'Top event of the day: '
-ai_remember = 'It is a news feed in a local newspaper of a small fantasy town located somewhere in the forest. Lots of things can happen in such a fantasy place. The time is 50\'s or 70\'s. Only good news allowed. The report contains only one main news article. Lots of things can happen in such a fantasy place. News must be fun or cool, not sad. The news is fantasy.'
-style_hint = 'Use a newspaper writing style. The report contains only one main news article.'
-banned_words = ['second', 'you', 'next event:', 'next headline:', 'next article:', 'found dead', 'finds dead', 'kills', 'killed']
-image_style = 'fantasy style, elegant, digital painting, artstation, unreal engine, octane render, concept art, hyper realistic lighting, illustration'
+ai_remember = 'It is a news feed in a local fantasy newspaper of a small fantasy town located somewhere in the forest. Lots of things can happen in such a fantasy place. The time is 50\'s or 70\'s, and only good news allowed. The report contains only one main fantasy news article. Fantasy news must be fun or cool, not sad.'
+style_hint = 'Use a fantasy newspaper writing style. The report contains only one main fantasy news article.'
+banned_words = ['article', 'stab', 'kill', 'dead', 'kidnap', 'second', 'you', 'next event:', 'murder', 'next headline:', 'next article:']
+image_style = 'fantasy style, digital painting, artstation, unreal engine, octane render, concept art, hyper realistic lighting, illustration, concept art, fantasy'
 
 if __name__ == '__main__':
     news_generator = aidungeon.AIDGenerator(
