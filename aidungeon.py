@@ -83,8 +83,8 @@ class AIDGenerator(object):
             for _ in range(33):
                 action.send_keys(Keys.TAB)
             action.click()
+            
             action.perform()
-
             action.reset_actions()
 
             # Enter mem
