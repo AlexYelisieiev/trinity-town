@@ -18,11 +18,11 @@ class ImageGenerator(object):
             inside the function.
         '''
 
-        # HACK: aidungeon pastes some symbols that stop pyautogui to
-        # just write it. Thus, pyperclip is used
         prompt = prompt or self.prompt
+        # Remove non-ascii characters
+        prompt = ''.join(symbol for symbol in prompt if symbol.isascii())
         pygui.press('win')
-        pygui.sleep(1)
+        pygui.sleep(2)
         pygui.write('google chrome', interval=0.05)
         pygui.sleep(1)
         pygui.press('enter')
@@ -36,7 +36,7 @@ class ImageGenerator(object):
         pygui.press('enter')
         pygui.sleep(7)
         pygui.click(x=401, y=185)
-        pygui.write(prompt, interval=0.02)
+        pygui.write(prompt, interval=0.07)
         pygui.press('enter')
         pygui.sleep(37)
         pygui.leftClick(x=488, y=422)
