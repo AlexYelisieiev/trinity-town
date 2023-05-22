@@ -5,7 +5,7 @@ from os import system
 
 
 prompt = 'Top event of the day: '
-ai_remember = 'It is a news feed in a local fantasy newspaper of a small fantasy town located somewhere in the forest. Lots of things can happen in such a fantasy place. The time is 50\'s or 70\'s, and only good news allowed. The report contains only one main fantasy news article. Fantasy news must be fun or cool, not sad.'
+ai_remember = 'It is a news feed in a local fantasy newspaper of a small fantasy town located somewhere in the forest. Lots of things can happen in such a fantasy place. The time is 50\'s or 70\'s, and only good news allowed. The report contains only one main fantasy news article. Fantasy news must be fun or cool, not sad. There are also news about different fantasy creatures.'
 style_hint = 'Use a fantasy newspaper writing style. The report contains only one main fantasy news article.'
 banned_words = ['article', 'stab', 'kill', 'dead', 'kidnap', 'second', 'you', 'next event:', 'murder', 'next headline:', 'next article:']
 image_style = 'fantasy style, digital painting, artstation, unreal engine, octane render, concept art, hyper realistic lighting, illustration, concept art, fantasy'
