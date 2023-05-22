@@ -18,9 +18,13 @@ class ImageGenerator(object):
             inside the function.
         '''
 
+        allowed_characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890~!*()-_=+[{]}|;:\'\",.?'
+        
         prompt = prompt or self.prompt
         # Remove non-ascii characters
-        prompt = ''.join(symbol for symbol in prompt if symbol.isascii())
+        prompt = ''.join(
+            symbol if symbol in allowed_characters else ' ' for symbol in prompt
+        )
         pygui.press('win')
         pygui.sleep(2)
         pygui.write('google chrome', interval=0.05)
