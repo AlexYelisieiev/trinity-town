@@ -79,13 +79,16 @@ class AIDGenerator(object):
             # Create an action chain
             action = webdriver.ActionChains(driver)
 
+            def action_do_and_reset() -> None:
+                action.perform()
+                action.reset_actions()
+
             # Let's open settings panel
             for _ in range(33):
                 action.send_keys(Keys.TAB)
             action.click()
             
-            action.perform()
-            action.reset_actions()
+            action_do_and_reset()
 
             # Enter mem
             action.click(
@@ -123,8 +126,7 @@ class AIDGenerator(object):
             #     )
             # )
 
-            action.perform()
-            action.reset_actions()
+            action_do_and_reset()
 
             # Click on prompt field
             action.click(
@@ -132,15 +134,14 @@ class AIDGenerator(object):
                     By.XPATH, '//textarea[@placeholder="What happens next?"]'
                 )
             )
-            action.perform()
-
-            action.reset_actions()
+            
+            action_do_and_reset()
 
             # Enter prompt
             sleep(2)
             action.send_keys(self.prompt, Keys.ENTER)
-            action.perform()
-            action.reset_actions()
+            
+            action_do_and_reset()
 
             # Refresh
             sleep(8)
@@ -169,5 +170,6 @@ class AIDGenerator(object):
             # Add date to generated
             news = news.replace('of the day', f'on {now}').replace('   ', ' ')
 
-            driver.close()
+            driver.quit()
+            
         return raw_news, news
